@@ -1,4 +1,5 @@
 using System;
+using Application.Activities.Commands;
 using Application.Activities.Queries;
 using Domain;
 using MediatR;
@@ -8,21 +9,25 @@ using Persistence;
 
 namespace API.Controllers;
 
-public class ActivitiesController(AppDbContext context, IMediator mediator) : BaseApiController
+public class ActivitiesController : BaseApiController
 {
     
     [HttpGet]
     public async Task<ActionResult<List<Activity>>> GetActivities()
     {
-        return await mediator.Send(new GetActivityList.Query());
+        return await Mediator.Send(new GetActivityList.Query());
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Activity>> GetActivityById(string id)
     {
-        var activity = await context.Activities.FindAsync(id);
-        if(activity == null) return NotFound();
-        
-        return activity;
+        return await Mediator.Send(new GetActivityDetails.Query{Id = id});
     }
+
+    [HttpPost]
+    public async Task<ActionResult<string>> CreateNewActivity(Activity activity)
+    {
+        return await Mediator.Send(new CreateActivity.Command{Activity = activity});
+    }
+
 }
