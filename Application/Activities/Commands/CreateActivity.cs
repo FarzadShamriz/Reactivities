@@ -24,7 +24,7 @@ public class CreateActivity
             }
             catch (Exception ex)
             {
-                throw new InvalidDataException("Bad Request!");
+                throw new InvalidDataException($"Error: {ex.Message}");
             }
 
             return request.Activity.Id;
