@@ -2,14 +2,15 @@ import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@
 
 type Props = {
     activity: Activity;
+    cancelSelectActivity: () => void;
 }
 
-export default function ActivityDetails({ activity }: Props) {
+export default function ActivityDetails({ activity, cancelSelectActivity}: Props) {
     return (
         <Card sx={{ borderRadius: 3 }}>
             <CardMedia
                 component='img'
-                src={`/images/categoryImages/${activity.category}`}
+                src={`/images/categoryImages/${activity.category}.jpg`}
             />
             <CardContent>
                 <Typography variant="h5">{activity.title}</Typography>
@@ -18,7 +19,7 @@ export default function ActivityDetails({ activity }: Props) {
             </CardContent>
             <CardActions>
                 <Button color="primary">Edit</Button>
-                <Button color="inherit">Cancel</Button>
+                <Button color="inherit" onClick={cancelSelectActivity}>Cancel</Button>
             </CardActions>
         </Card>
     )
