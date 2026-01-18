@@ -20,8 +20,7 @@ export default function ActivityDashboard({ activities,
     selectedActivity,
     editMode,
     openForm,
-    closeForm,
-    deleteActivity }
+    closeForm }
     : Props) {
     return (
         <Grid2 container spacing={3}>
@@ -29,7 +28,6 @@ export default function ActivityDashboard({ activities,
                 <ActivityList
                     activities={activities}
                     selectActivity={selectActivity}
-                    deleteActivity={deleteActivity}
                 />
             </Grid2>
             <Grid2 size={5}>
