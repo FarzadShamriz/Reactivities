@@ -10,8 +10,7 @@ export const useActivities = (id?: string) => {
         queryFn: async () => {
             const response = await agent.get<Activity[]>('/activities');
             return response.data;
-        },
-        enabled: !!id
+        }
     });
 
     const {data: activity, isLoading: isLoadingActivity} = useQuery({
@@ -19,7 +18,8 @@ export const useActivities = (id?: string) => {
         queryFn: async () => {
             const response = await agent.get<Activity>(`/Activities/${id}`);
             return response.data;
-        }
+        },
+        enabled: !!id
     });
 
     const updateActivity = useMutation({
