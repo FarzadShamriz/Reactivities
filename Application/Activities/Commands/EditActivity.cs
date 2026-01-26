@@ -1,5 +1,6 @@
 using System;
 using System.Reflection.Metadata.Ecma335;
+using Application.Activities.DTOs;
 using Application.Core;
 using AutoMapper;
 using Domain;
@@ -12,17 +13,17 @@ public class EditActivity
 {
     public class Command : IRequest<Result<Unit>>
     {
-        public required Activity Activity { get; set; }
+        public required EditActivityDto ActivityDto { get; set; }
     }
 
     public class Handler(AppDbContext appDbContext, IMapper mapper) : IRequestHandler<Command, Result<Unit>>
     {
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var activity = appDbContext.Activities.Find(request.Activity.Id);
+            var activity = appDbContext.Activities.Find(request.ActivityDto.Id);
             if (activity == null) return Result<Unit>.Failure("Activity Not Found!", 404);
 
-            mapper.Map(request.Activity, activity);
+            mapper.Map(request.ActivityDto, activity);
             appDbContext.Activities.Update(activity);
             var result = await appDbContext.SaveChangesAsync() > 0;
 
